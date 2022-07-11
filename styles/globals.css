@@ -1,16 +1,164 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
+@layer base {
+  html,
+  body {
+    @apply bg-stone-900;
+
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+@layer components {
+  /* ---------------------------- general --------------------------- */
+  .img-base {
+    @apply object-cover object-center;
+  }
+  .img-icon {
+    @apply object-cover object-center h-10 w-10 my-auto hover:mix-blend-lighten transition-all relative;
+  }
+  .icon-btn-square {
+    @apply h-10 w-10  sm:h-11 sm:w-full bg-none text-textDark flex items-center justify-center hover:bg-primaryMedium rounded-md transition-all relative focus:h-full focus:text-accentMain border-accentMain focus:border-b-2 focus:rounded-none;
+  }
+
+  .icon-btn {
+    @apply h-10 w-10  bg-primaryMedium hover:bg-primaryMediumLight rounded-full transition-all relative text-textMedium;
+  }
+  .icon-note {
+    @apply absolute top-12 left-1/2 bg-white bg-opacity-0 text-primaryDark -translate-x-1/2  z-10 rounded-md px-3 py-2 transition-all text-xs whitespace-nowrap  delay-200 opacity-0;
+  }
+
+  .icon-btn:hover .icon-note {
+    @apply bg-opacity-80 transition-all opacity-100;
+  }
+  .icon-btn-square:hover .icon-note {
+    @apply block bg-opacity-80 transition-all opacity-100;
+  }
+  .btn:hover .icon-note {
+    @apply block bg-opacity-80 transition-all opacity-100;
+  }
+  .img-icon:hover .icon-note {
+    @apply block bg-opacity-80 transition-all opacity-100;
+  }
+  .img-icon-small {
+    @apply img-icon p-0 m-0 w-8 h-8;
+  }
+  .icon-round-text-btn {
+    @apply h-10  bg-none text-textDark flex  hover:bg-primaryMedium rounded-md transition-all relative  justify-start items-center w-full text-sm font-medium gap-2 p-3 mb-0;
+  }
+  /* ---------------------------- general --------------------------- */
+
+  /* ----------------------------- post ----------------------------- */
+  .post-container {
+    @apply max-w-lg bg-primaryMediumDark mt-5 mx-auto rounded-md shadow-sm shadow-black  py-3 text-sm;
+  }
+  .post-comment-form {
+    @apply col-span-8 h-10  w-full flex items-center justify-between px-3 bg-primaryMedium rounded-3xl;
+  }
+  .post-comment-input {
+    @apply h-full w-full col-span-2 bg-transparent outline-none py-2 resize-none;
+  }
+
+  .post-comment-input::-webkit-scrollbar {
+    display: none;
+  }
+  /* ----------------------------- post ----------------------------- */
+
+  /* ---------------------------- Navbar ---------------------------- */
+  .navbar-container {
+    @apply bg-primaryMediumDark h-14 fixed top-0 w-full left-0 z-20;
+  }
+  .navbar {
+    @apply grid grid-cols-12 max-w-7xl px-5 items-center h-full mx-auto gap-5;
+  }
+  .logo-search-container {
+    @apply col-span-3 sm:col-span-3 h-full;
+  }
+
+  .logo-search {
+    @apply flex items-center gap-2  h-full;
+  }
+  .nav-links-container {
+    @apply col-span-4 sm:col-span-5 md:col-span-6  h-full w-full;
+  }
+  .nav-links {
+    @apply grid grid-cols-5 h-full mx-auto  w-full items-center;
+  }
+  .nav-menu-container {
+    @apply col-span-5 sm:col-span-4 md:col-span-3 h-full;
+  }
+  .nav-menu {
+    @apply flex items-center h-full gap-2 justify-end;
+  }
+  /* ---------------------------- navbar ---------------------------- */
+
+  /* ---------------------------------------------------------------- */
+  /*                             main-page                            */
+  /* ---------------------------------------------------------------- */
+  .main-container {
+    @apply w-full h-screen grid grid-cols-4 lg:grid-cols-9 xl:grid-cols-12 pt-14 text-textPrimary max-w-7xl mx-auto;
+  }
+  .main-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ------------------------- Left Sidebar ------------------------- */
+  .main-left-sidebar {
+    @apply hidden xl:block col-span-3 p-3 overflow-y-scroll;
+    height: calc(100vh - 56px);
+  }
+  .main-left-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  /* ------------------------- Main Content ------------------------- */
+
+  .main-content {
+    @apply w-full overflow-y-scroll col-span-4 sm:col-span-6 px-0 max-w-2xl mx-auto;
+    height: calc(100vh - 56px);
+  }
+  .main-content::-webkit-scrollbar {
+    display: none;
+  }
+  .stories-container {
+    @apply w-full my-5 h-52 sm:h-48 grid grid-cols-4  sm:grid-cols-5 xl:grid-cols-4 gap-2 sm:px-5;
+  }
+  .story {
+    @apply h-52 w-full  rounded-md relative overflow-hidden shadow-black shadow-sm hover:shadow-md transition-all cursor-pointer grid grid-rows-4;
+  }
+
+  .story-last {
+    @apply hidden sm:grid xl:hidden;
+  }
+  /* ------------------------- Right Sidebar ------------------------- */
+
+  .main-right-sidebar {
+    @apply hidden w-full lg:block lg:col-span-3 px-3 overflow-y-scroll;
+    height: calc(100vh - 56px);
+  }
+  .main-right-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  .sponsor-img {
+    @apply h-24 w-24 col-span-2  img-base rounded-md overflow-hidden;
+  }
+
+  .contact-modal {
+    @apply fixed top-0 right-20 z-20 bg-primaryMedium w-80 h-36 opacity-0 group-hover:opacity-100 transition-all flex items-start rounded-md p-5 gap-5 shadow-md shadow-primaryMediumDark delay-200;
+  }
+  /* ---------------------------------------------------------------- */
+  /*                             main-page                            */
+  /* ---------------------------------------------------------------- */
 }
