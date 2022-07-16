@@ -3,6 +3,8 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectFriend } from "../../app/store/slices/friend";
 import { mainLeftLinks, mainShortcuts } from "../../data/main-data";
 import ExtLinkTextButton from "../Buttons/ExtLinkTextButton";
 import LinkIconTextButton from "../Buttons/LinkIconTextButton";
@@ -24,14 +26,16 @@ type ExtTextBtn = {
 const MainLeftSidebar = () => {
   const { data: session } = useSession();
   const [openMenuList, setOpenMenuList] = useState<boolean>(false);
+  const { mainProfile } = useSelector(selectFriend);
+
   return (
     <div className="main-left-sidebar">
       {/* ------------------------- main profile ------------------------- */}
       <LinkImgTextButton
         href="/profile"
         src={
-          session?.user?.image
-            ? session.user.image
+          mainProfile.picture
+            ? mainProfile.picture
             : "/images/profile/profile.png"
         }
         text={session?.user?.name ? session.user.name : "user"}

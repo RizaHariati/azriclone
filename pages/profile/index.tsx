@@ -1,7 +1,24 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { wrapper } from "../../app/store";
+import WelcomeSection from "../../components/HomePage/WelcomeSection";
+import { FriendType } from "../../typing.d";
 
-const MainProfile = () => {
+interface Props {
+  mainProfile: FriendType;
+}
+const MainProfile = ({ mainProfile }: Props) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <div className="main-container">
       <Head>
@@ -14,3 +31,11 @@ const MainProfile = () => {
 };
 
 export default MainProfile;
+
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  let mainProfile: FriendType = store.getState().friend.mainProfile;
+
+  return {
+    props: { mainProfile },
+  };
+});

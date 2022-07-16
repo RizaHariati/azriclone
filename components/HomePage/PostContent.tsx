@@ -40,7 +40,7 @@ const PostContent = ({
           height={450}
           layout="responsive"
           className="img-base z-0"
-          alt={image.slice(0, 5)}
+          alt={image}
         />
       </div>
       <div className="grid grid-cols-9 px-5 py-3 text-textDark">

@@ -4,15 +4,18 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 import Layout from "../components/navbar/Layout";
 import { SessionProvider } from "next-auth/react";
-import { wrapper } from "../app/store";
+import { persistor, wrapper } from "../app/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   return (
-    <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </SessionProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <SessionProvider session={session}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SessionProvider>
+    </PersistGate>
   );
 }
 

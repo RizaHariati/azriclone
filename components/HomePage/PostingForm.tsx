@@ -7,21 +7,29 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSession } from "next-auth/react";
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectFriend } from "../../app/store/slices/friend";
 import LinkImgButton from "../Buttons/LinkImgButton";
 
 const PostingForm = () => {
   const { data: session } = useSession();
+  const { mainProfile } = useSelector(selectFriend);
+
   return (
     <div className=" bg-primaryMediumDark p-3 px-5 max-w-lg mx-auto shadow-sm shadow-black rounded-md md:mt-6">
       {/* ------------------------- posting form ------------------------- */}
       <div className="grid grid-cols-10 justify-center gap-3 text-center h-10 ">
-        {session?.user?.image && (
-          <LinkImgButton
-            src={session?.user?.image}
-            href="/profile"
-            imgClass="img-icon"
-          />
-        )}
+        <LinkImgButton
+          src={
+            session?.user?.image
+              ? mainProfile.picture
+                ? mainProfile.picture
+                : session.user.image
+              : "/images/profile/profile.png"
+          }
+          href="/profile"
+          imgClass="img-icon"
+        />
 
         <button className="height-10 text-textDark hover:text-textMedium col-span-9 text-left bg-primaryMedium hover:bg-primaryMediumLight transition-all px-3 rounded-full">
           {`  What's on your mind, ${session?.user?.name}? `}

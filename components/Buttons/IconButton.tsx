@@ -6,11 +6,12 @@ interface Props {
   text: string;
   icon: IconProp;
   btnClass?: string;
+  onClick?: () => void;
 }
 
-const IconButton = ({ icon, text, btnClass }: Props) => {
+const IconButton = ({ icon, text, btnClass, onClick }: Props) => {
   return (
-    <button className={btnClass ? btnClass : "icon-btn"}>
+    <button onClick={onClick} className={btnClass ? btnClass : "icon-btn"}>
       <FontAwesomeIcon icon={icon} />
       <p className="icon-note">{text}</p>
     </button>

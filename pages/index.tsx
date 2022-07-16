@@ -1,26 +1,26 @@
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import { useState } from "react";
+import process from "process";
 import { wrapper } from "../app/store";
 import { setFriendData } from "../app/store/slices/friend";
 import {
-  closeLoading,
-  openLoading,
-  setPosts,
+  addMoreComments,
+  addMorePosts,
   setStories,
 } from "../app/store/slices/post";
 import MainContent from "../components/HomePage/MainContent";
 import MainLeftSidebar from "../components/HomePage/MainLeftSidebar";
 import MainRightSidebar from "../components/HomePage/MainRightSidebar";
 import WelcomeSection from "../components/HomePage/WelcomeSection";
-import { PostType } from "../typing.d";
+import { CommentType, PostType } from "../typing.d";
 
 const URL_USER = "https://dummyapi.io/data/v1/user?";
 const URL_POST = "https://dummyapi.io/data/v1/post?";
+const URL_COMMENT = "https://dummyapi.io/data/v1/comment/?";
 
 const config = {
   method: "GET",
-  headers: { "app-id": "615d134132c9c40bf2a39437" },
+  headers: { "app-id": process.env.KEYWORD_API || "key" },
 };
 
 const Home = () => {
@@ -52,11 +52,14 @@ export default Home;
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
     try {
+      /* ------------------------- getting story ------------------------ */
       const responseStory = await fetch(URL_POST + "page=0&limit=5", config);
       const story = await responseStory.json();
       if (story.data) {
         store.dispatch(setStories(story.data));
       }
+
+      /* ------------------------ getting friends ----------------------- */
 
       const responseFriend = await fetch(URL_USER, config);
       const friend = await responseFriend.json();
@@ -64,12 +67,30 @@ export const getServerSideProps = wrapper.getServerSideProps(
         store.dispatch(setFriendData(friend.data));
       }
 
-      const responsePost = await fetch(URL_POST + "page=1&limit=5", config);
+      /* ---------------------- getting main posts ---------------------- */
+      const page: number = store.getState().post.page;
+      const responsePost = await fetch(
+        URL_POST + "page=" + page + "1&limit=5",
+        config
+      );
       const post = await responsePost.json();
 
       if (post.data) {
         const postData: PostType[] = post.data;
-        store.dispatch(setPosts(postData));
+        store.dispatch(addMorePosts(postData));
+      }
+
+      /* ----------------------- getting comments ----------------------- */
+      const commentPage: number = store.getState().post.commentPage;
+      const responseComment = await fetch(
+        URL_COMMENT + "page=" + commentPage,
+        config
+      );
+      const comment = await responseComment.json();
+
+      if (comment.data) {
+        const commentData: CommentType[] = comment.data;
+        store.dispatch(addMoreComments(commentData));
       }
     } catch (error) {
       console.log(error);

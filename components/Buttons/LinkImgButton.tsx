@@ -7,12 +7,12 @@ interface Props {
   href: string;
   text?: string;
   imgClass: string;
-  onClick?: () => {};
+  onClick?: () => {} | void;
 }
 const LinkImgButton = ({ src, href, text, imgClass, onClick }: Props) => {
   return (
     <Link href={href}>
-      <button className={imgClass} onClick={() => onClick?.()}>
+      <button className={imgClass} onClick={onClick ? onClick : () => {}}>
         <Image
           src={src}
           width={50}

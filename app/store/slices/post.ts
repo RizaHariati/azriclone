@@ -1,12 +1,21 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "..";
 
 export const PostSlice = createSlice({
   name: "post",
   initialState: {
-    loading: false,
-    stories: [],
+    stories: [
+      {
+        id: "",
+        image: "",
+        likes: 0,
+        owner: { id: "", title: "", firstName: "", lastName: "", picture: "" },
+        publishDate: "",
+        tags: [],
+        text: "",
+      },
+    ],
     posts: [
       {
         id: "",
@@ -18,24 +27,32 @@ export const PostSlice = createSlice({
         text: "",
       },
     ],
-    page: 2,
+    page: 1,
+    comments: [
+      {
+        id: "",
+        message: "",
+        owner: { id: "", title: "", firstName: "", lastName: "", picture: "" },
+        post: "",
+        publishDate: "",
+      },
+    ],
+    commentPage: 0,
   },
+
   reducers: {
     setStories: (state, action) => {
-      state.stories = action.payload;
+      state.stories = [...action.payload];
     },
-    setPosts: (state, action) => {
-      state.posts = [...action.payload];
-    },
+
     addMorePosts: (state, action) => {
       state.posts = [...action.payload];
       state.page = state.page + 1;
     },
-    openLoading: (state) => {
-      state.loading = true;
-    },
-    closeLoading: (state) => {
-      state.loading = false;
+
+    addMoreComments: (state, action) => {
+      state.comments = [...action.payload];
+      state.commentPage = state.commentPage + 1;
     },
   },
   extraReducers: {
@@ -46,13 +63,16 @@ export const PostSlice = createSlice({
       if (!action.payload.post.stories) {
         return state;
       }
+      if (!action.payload.post.comments) {
+        return state;
+      }
       state.posts = action.payload.post.posts;
       state.stories = action.payload.post.stories;
+      state.comments = action.payload.post.comments;
     },
   },
 });
 
-export const { addMorePosts, setStories, setPosts, openLoading, closeLoading } =
-  PostSlice.actions;
+export const { addMorePosts, setStories, addMoreComments } = PostSlice.actions;
 export const selectPost = (state: AppState) => state.post;
 export default PostSlice.reducer;

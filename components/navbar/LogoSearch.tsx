@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import LinkImgButton from "../Buttons/LinkImgButton";
 
 const LogoSearch = () => {
   const [openSearch, setopenSearch] = useState<boolean>(false);
@@ -13,12 +12,20 @@ const LogoSearch = () => {
     <div className="logo-search-container ">
       <div className="logo-search">
         {!openSearch && (
-          <LinkImgButton
-            src="/images/websiteImages/Logo.png"
-            href="/"
-            text="Home"
-            imgClass="img-icon"
-          />
+          <Link rel="icon" href="/">
+            <button className="img-icon">
+              <Image
+                priority
+                src="/images/websiteImages/Logo.png"
+                width={50}
+                height={50}
+                layout="responsive"
+                className="img-base rounded-full"
+                alt="Logo"
+              />
+              <p className="icon-note">Home</p>
+            </button>
+          </Link>
         )}
 
         {session && (

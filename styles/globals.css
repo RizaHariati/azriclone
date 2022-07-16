@@ -57,9 +57,12 @@
     @apply img-icon p-0 m-0 w-8 h-8;
   }
   .icon-round-text-btn {
-    @apply h-10  bg-none text-textDark flex  hover:bg-primaryMedium rounded-md transition-all relative  justify-start items-center w-full text-sm font-medium gap-2 p-3 mb-0;
+    @apply h-10  bg-none text-textLight flex  hover:bg-primaryMedium rounded-md transition-all relative  justify-start items-center w-full text-sm font-medium gap-2 p-3 mb-0;
   }
-  /* ---------------------------- general --------------------------- */
+  .icon-round-text-btn-lg {
+    @apply icon-round-text-btn h-14 text-base;
+  }
+  /* ---------------------------- general   --------------------------- */
 
   /* ----------------------------- post ----------------------------- */
   .post-container {
@@ -102,6 +105,18 @@
   }
   .nav-menu {
     @apply flex items-center h-full gap-2 justify-end;
+  }
+  .menu-list {
+    @apply absolute top-14 right-0 bg-primaryMediumDark w-96 rounded-md text-textPrimary shadow-md z-20 shadow-black  transition-all h-screen;
+  }
+
+  .notifications-container {
+    @apply w-full overflow-y-scroll;
+    height: 70vh;
+  }
+
+  .notifications-container::-webkit-scrollbar {
+    display: none;
   }
   /* ---------------------------- navbar ---------------------------- */
 

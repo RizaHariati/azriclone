@@ -11,7 +11,7 @@ import LoadingSpinner from "../LoadingSpinner";
 
 const Stories = () => {
   const { stories } = useSelector(selectPost);
-  const { friendList, mainProfile } = useSelector(selectFriend);
+  const { mainProfile } = useSelector(selectFriend);
 
   return (
     <div>
@@ -51,7 +51,7 @@ const Stories = () => {
                   >
                     <div className="absolute w-full h-full top-0 left-0 img-base hover:scale-110 transition-all z-0">
                       <Image
-                        priority={index === stories.length - 1 ? true : false}
+                        priority={index === 0 ? true : false}
                         quality={50}
                         src={story.image}
                         width={350}
@@ -63,6 +63,7 @@ const Stories = () => {
                     <Link href="/profile">
                       <button className="img-icon absolute top-2 left-2 border-accentMain border-4 rounded-full">
                         <Image
+                          priority
                           src={story.owner.picture}
                           width={50}
                           height={50}

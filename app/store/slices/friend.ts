@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "..";
 import { FriendType } from "../../../typing.d";
+
 export const FriendSlice = createSlice({
   name: "friend",
 
@@ -18,23 +19,20 @@ export const FriendSlice = createSlice({
   reducers: {
     setFriendData: (state, action) => {
       const friendList = action.payload;
-
-      if (!state.mainProfile.id) {
-        state.mainProfile =
-          friendList[Math.floor(Math.random() * friendList.length - 1)];
-      }
-      state.friendList = friendList.filter(
-        (friend: FriendType) => friend.id !== state.mainProfile.id
-      );
+      const mainProfile = friendList[2];
+      state.mainProfile = mainProfile;
+      state.friendList = friendList.filter((friend: FriendType) => {
+        return friend.id !== mainProfile.id;
+      });
     },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
       /* ---------------- only if you have data you want ---------------- */
-      if (
-        !action.payload.friend.friendList ||
-        !action.payload.friend.mainProfile
-      ) {
+      if (!action.payload.friend.friendList) {
+        return state;
+      }
+      if (!action.payload.friend.mainProfile) {
         return state;
       }
 

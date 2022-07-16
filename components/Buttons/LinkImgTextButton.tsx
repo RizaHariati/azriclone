@@ -7,12 +7,23 @@ interface Props {
   src: string;
   text: string;
   icon?: string;
-  onClick?: () => {};
+  onClick?: () => {} | void;
+  buttonClass?: string;
 }
-const LinkImgTextButton = ({ href, src, text, icon, onClick }: Props) => {
+const LinkImgTextButton = ({
+  href,
+  src,
+  text,
+  icon,
+  onClick,
+  buttonClass,
+}: Props) => {
   return (
     <Link href={href}>
-      <button className="icon-round-text-btn" onClick={() => onClick?.()}>
+      <button
+        className={buttonClass ? buttonClass : "icon-round-text-btn "}
+        onClick={() => onClick?.()}
+      >
         <div className={icon ? icon : "img-icon-small"}>
           <Image
             src={src}

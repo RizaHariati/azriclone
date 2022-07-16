@@ -23,3 +23,5 @@ export type CommentType = {
   post: string;
   publishDate: string;
 };
+
+/// <reference types="redux-persist" />
